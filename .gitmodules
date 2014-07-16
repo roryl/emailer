@@ -1,0 +1,3 @@
+[submodule "utilities/querystring"]
+	path = utilities/querystring
+	url = https://github.com/roryl/queryString
