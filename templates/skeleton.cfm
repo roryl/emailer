@@ -12,4 +12,4 @@ The #variables.data.domain# team.
 </cfsavecontent>
 
 <!--- Plain Content ---->
-<cfset variables.plaincontent = new affiliates.core.utilities.stripHTML(variables.htmlcontent)>
+<cfset variables.plaincontent = new stripHTML(variables.htmlcontent)>

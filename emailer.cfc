@@ -1,5 +1,6 @@
 ﻿<cfimport path="utilities.queryString.queryString">
 <cfimport path="utilities.properCase">
+<cfimport path="utilities.stripHTML">
 <cfcomponent accessors="true">
 	<cfproperty name="from">
 	<cfproperty name="to">
