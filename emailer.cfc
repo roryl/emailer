@@ -13,24 +13,50 @@
 	<cfproperty name="data">
 	<cfproperty name="username">
 	
-	<cffunction name="init" returnType="emailerProxy">
+	<cffunction name="init" returnType="emailer">
+		<cfargument name="server" required="true">
+		<cfargument name="useTLS" default="true">
+		<cfargument name="password" required="true">
+		<cfargument name="port" default="25">
+		<cfargument name="username" required="true">
+		<cfargument name="templateLocation" default="templates" hint="mapping to the directory containing the templates">
 		<cfscript>
-			//Include the basic SMTP server settings
-			include template="settings";
-			var proxy = new emailerProxy(this);
+			
+			variables.server = arguments.server;
+			variables.useTLS = arguments.useTLS;
+			variables.password = arguments.password;
+			variables.port = arguments.port;
+			variables.username = arguments.username;			
+			variables.templateLocation = arguments.templateLocation;
+			variables.data = {};
+			//var proxy = new emailerProxy(this);
 		</cfscript>
-		<cfreturn proxy>
+		<cfreturn this>
 	</cffunction>
 	
 	<cffunction name="setData">
 		<cfargument name="data" required="true" type="struct">
 		<cfset structAppend(variables.data,arguments.data,true)>
 	</cffunction>
+
+	<cffunction name="stripHTML">
+		<cfargument name="html">
+		<cfreturn new stripHTML(arguments.html)>
+	</cffunction>
 	
 	<cffunction name="sendMail" access="public">
-		<cfinclude template="templates/#variables.template#.cfm">
-		<cfmail from="#variables.from#"
-							to="#variables.to#"
+		<cfargument name="from">
+		<cfargument name="to">		
+		<cfargument name="template">
+		<cfargument name="data" default={}>
+
+		<cfscript>
+			structAppend(variables.data,arguments.data,true);
+		</cfscript>
+		<cfinclude template="#variables.templateLocation#/#arguments.template#.cfm">		
+
+		<cfmail from="#arguments.from#"
+							to="#arguments.to#"
 							usetls="#variables.usetls#"
 							username="#variables.username#"
 							password="#variables.password#"
