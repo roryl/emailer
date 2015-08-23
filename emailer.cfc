@@ -48,11 +48,13 @@
 		<cfargument name="from">
 		<cfargument name="to">		
 		<cfargument name="template">
+		<cfargument name="subject">
 		<cfargument name="data" default={}>
 
 		<cfscript>
 			structAppend(variables.data,arguments.data,true);
 		</cfscript>
+
 		<cfinclude template="#variables.templateLocation#/#arguments.template#.cfm">		
 
 		<cfmail from="#arguments.from#"
@@ -62,7 +64,7 @@
 							password="#variables.password#"
 							server="#variables.server#"
 							port="#variables.port#"
-							subject="#variables.subject#">
+							subject="#arguments.subject#">
 							<cfmailpart type="text/plain">#variables.plaincontent#</cfmailpart>
 							<cfmailpart type="text/html">#variables.htmlcontent#</cfmailpart>
 							</cfmail>
